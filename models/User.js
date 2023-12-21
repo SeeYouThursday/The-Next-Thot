@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const thoughtSchema = require('./Thought');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -18,4 +19,5 @@ const userSchema = new mongoose.Schema({
       'Please enter a valid email',
     ],
   },
+  thoughts: [thoughtSchema],
 });
