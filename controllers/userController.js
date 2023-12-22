@@ -1,10 +1,11 @@
-const { User } = require('../models/User');
+const mongoose = require('mongoose');
+const User = require('../models/User');
 
 module.exports = {
   //Get all users
   async getUsers(req, res) {
     try {
-      const users = await User.find().populate('thoughts');
+      const users = User.find().populate('thoughts');
       res.json(users);
     } catch (err) {
       console.error({ message: err });
@@ -22,6 +23,15 @@ module.exports = {
     } catch (err) {
       console.error({ message: err });
       return res.status(500).json(err);
+    }
+  },
+  //Create a New User
+  async createUser(req, res) {
+    try {
+      const user = await User.create(req.body);
+      res.json(user);
+    } catch (err) {
+      res.status(500).json(err);
     }
   },
   //Update One User
