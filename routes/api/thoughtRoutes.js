@@ -2,14 +2,13 @@ const router = require('express').Router();
 
 //TODO require in routes from routes folder
 const {
-  getSingleUser,
-  getUsers,
-  createUser,
-} = require('../../controllers/userController');
+  getSingleThought,
+  getThoughts,
+  createThought,
+} = require('../../controllers/thoughtController');
 
-router.route('/').get(getUsers);
-// .post(createUser);
+router.route('/').get(getThoughts).post(createThought);
 
-router.route('/:thoughtId').get(getSingleUser);
+router.route('/:thoughtId').get(getSingleThought);
 
 module.exports = router;

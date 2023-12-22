@@ -1,6 +1,6 @@
 const User = require('./User');
 const Thought = require('./Thought');
-const Reaction = require('./Reaction');
+const Reaction = require('./schema/Reaction');
 
 // const { User, Thought, Reaction } = require('./models');
 
