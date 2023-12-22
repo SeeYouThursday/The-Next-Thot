@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const reactionSchema = require('./Reaction');
+const { Schema, model } = require('mongoose');
+const reactionSchema = require('./schema/Reaction');
 
-const thoughtSchema = {
+const thoughtSchema = new Schema({
   thoughtText: {
     type: String,
     required: true,
@@ -10,14 +10,20 @@ const thoughtSchema = {
   },
   createdAt: {
     type: Date,
-    //TODO Set default value to current timestamp
-    default: '', //timestamp
+    default: Date.now,
+    //TODO Use a getter method to format the timestamp on query - happens in the routess
   },
+  // username that created this thought
   username: {
     type: String,
     required: true,
   },
+  //these are like replies
   reactions: [reactionSchema],
-};
+});
+//TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
-module.exports = thoughtSchema;
+//TODO Initialize Thought Model
+const Thought = model('thought', thoughtSchema);
+
+module.exports = Thought;
