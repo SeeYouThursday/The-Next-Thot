@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-//TODO require in routes from routes folder
 const {
   getSingleThought,
   getThoughts,

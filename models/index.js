@@ -2,6 +2,5 @@ const User = require('./User');
 const Thought = require('./Thought');
 const Reaction = require('./schema/Reaction');
 
-// const { User, Thought, Reaction } = require('./models');
-
+//! Do I need the Reaction here?
 module.exports = { User, Thought, Reaction };

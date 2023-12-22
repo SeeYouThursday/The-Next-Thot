@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose');
-const { dateGetter } = require('../../utils/formatDate');
+const { formatDate } = require('../../utils/formatDate');
 
 const reactionSchema = new Schema(
   {
@@ -19,9 +19,8 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      //! Testing Needed!!! getter method to format the timestamp on query
       get: function () {
-        dateGetter();
+        return formatDate();
       },
     },
   },

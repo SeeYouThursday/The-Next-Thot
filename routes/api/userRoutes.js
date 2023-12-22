@@ -13,7 +13,7 @@ router.route('/').get(getUsers).post(createUser);
 
 //TODO checkout these functions after written to make sure they will work
 router.route('/:userId').get(getSingleUser);
-//   .put(updateSingleUser)
+//   .put(updateSingleUser) //! Error asking for callback function
 //   .delete(deleteSingleUser);
 
 module.exports = router;
