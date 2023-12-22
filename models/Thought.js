@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./schema/Reaction');
+const { formatDate } = require('../utils/formatDate');
 
 const thoughtSchema = new Schema({
   thoughtText: {
@@ -11,7 +12,8 @@ const thoughtSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    //TODO Use a getter method to format the timestamp on query - happens in the routess
+    //! Testing Needed!!! getter method to format the timestamp on query
+    get: formatDate(this.default),
   },
   // username that created this thought
   username: {
@@ -22,6 +24,9 @@ const thoughtSchema = new Schema({
   reactions: [reactionSchema],
 });
 //TODO: Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+thoughtSchema.virtual('reactionCount').get(function () {
+  return this.reactions.length;
+});
 
 //TODO Initialize Thought Model
 const Thought = model('thought', thoughtSchema);
