@@ -1,25 +1,35 @@
 const { Schema } = require('mongoose');
+const { dateGetter } = require('../../utils/formatDate');
 
-const reactionSchema = new Schema({
-  reactionId: {
-    type: Schema.Types.ObjectId,
-    default: new ObjectId(),
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      maxlength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      //! Testing Needed!!! getter method to format the timestamp on query
+      get: function () {
+        dateGetter();
+      },
+    },
   },
-  reactionBody: {
-    type: String,
-    required: true,
-    maxlength: 280,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    //! Testing Needed!!! getter method to format the timestamp on query
-    get: formatDate(this.default),
-  },
-});
+  {
+    toJSON: {
+      getters: true,
+    },
+  }
+);
 
 module.exports = reactionSchema;

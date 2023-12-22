@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
 const User = require('../models/User');
 
 module.exports = {
   //Get all users
   async getUsers(req, res) {
     try {
-      const users = User.find().populate('thoughts');
+      const users = await User.find({}).populate('thoughts');
       res.json(users);
     } catch (err) {
       console.error({ message: err });
