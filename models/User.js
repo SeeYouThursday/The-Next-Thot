@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { Thought } = require('./Thought');
 const userSchema = new Schema(
   {
     username: {
@@ -14,16 +13,18 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
+      lowercase: true,
       match: [
         /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
         'Please enter a valid email',
       ],
     },
+    //Future Dev: Add Password
     //TODO check below about
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'thought',
+        ref: 'Thought',
       },
     ],
     //TODO check below about friends
