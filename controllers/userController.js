@@ -54,6 +54,7 @@ module.exports = {
     try {
       const user = req.params.userId;
       const update = req.body;
+      //calls for filter, update, and optional options
       const updatedUser = await User.findByIdAndUpdate(user, update).select(
         '-__v'
       );
