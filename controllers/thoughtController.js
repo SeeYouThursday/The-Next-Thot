@@ -5,7 +5,7 @@ module.exports = {
   async getThoughts(req, res) {
     try {
       const thought = await Thought.find({});
-      res.json(thought);
+      res.status(200).json(thought);
     } catch (err) {
       console.error({ message: err });
       return res.status(500).json(err);
@@ -14,11 +14,12 @@ module.exports = {
   //Get One Thought by Id
   async getSingleThought(req, res) {
     try {
-      const thought = await Thought.findOne({ _id: req.params.thoughtId });
+      const id = { _id: req.params.thoughtId };
+      const thought = await Thought.findOne(id);
 
       !thought
         ? res.status(404).json({ message: 'No thought found with that ID' })
-        : res.json(thought);
+        : res.status(200).json(thought);
     } catch (err) {
       console.error({ message: err });
       return res.status(500).json(err);
@@ -28,7 +29,7 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
-      res.json(thought);
+      res.status(200).json(thought);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -36,20 +37,21 @@ module.exports = {
   //Update One Thought
   async updatethought(req, res) {
     try {
-      const updatedThought = await Thought.findByIdAndDelUpdate(
-        req.params.thoughtId
-      );
+      const thought = req.params.thoughtId;
+      const update = req.body;
+      //Find the thought and update with info in the req.body
+      const updatedThought = await Thought.findByIdAndUpdate(thought, update);
 
-      !deletedthought
+      !updatedThought
         ? res.json({
             message: `No Thought found with the id ${req.params.thoughtId}`,
           })
-        : res.json(deletedthought).status(200);
+        : res.json(updatedThought).status(200);
     } catch (err) {
-      res.status(500);
+      res.status(500).json({ message: err });
     }
   },
-  //Delete One Thought
+  //Delete One Thought //! Need to adjust
   async deletethought(req, res) {
     await Thought.findByIdAndDelete(req.params.thoughtId),
       function (err, docs) {
