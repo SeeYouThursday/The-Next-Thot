@@ -4,15 +4,15 @@ const {
   getSingleUser,
   getUsers,
   createUser,
-  updateSingleUser,
+  updateUser,
   deleteUser,
 } = require('../../controllers/userController');
 
 router.route('/').get(getUsers).post(createUser);
 
-//TODO checkout these functions after written to make sure they will work
+//TODO update function work out error
 router.route('/:userId').get(getSingleUser).delete(deleteUser);
-//   .put(updateSingleUser) //! Error asking for callback function
-//
+//    //! Error asking for callback function
 
+router.route('/:userId/update').put(updateUser);
 module.exports = router;

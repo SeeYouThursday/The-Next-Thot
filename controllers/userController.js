@@ -52,13 +52,17 @@ module.exports = {
   //Update One User
   async updateUser(req, res) {
     try {
-      const updatedUser = await User.findByIdAndDelUpdate(req.params.userId);
-
-      !deletedUser
+      const user = req.params.userId;
+      const update = req.body;
+      const updatedUser = await User.findByIdAndUpdate(user, update).select(
+        '-__v'
+      );
+      //! Check update docs in Mongoose to see how to include req.body
+      !updatedUser
         ? res.json({
             message: `No User found with the id ${req.params.userId}`,
           })
-        : res.json(deletedUser).status(200);
+        : res.status(200).json(updatedUser);
     } catch (err) {
       res.status(500);
     }
@@ -69,7 +73,7 @@ module.exports = {
       const user = await User.findByIdAndDelete(req.params.userId);
       res.json(user);
     } catch (err) {
-      res.json({ message: err });
+      res.status(500).json({ message: err });
     }
   },
 };
