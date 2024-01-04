@@ -1,18 +1,18 @@
 const User = require('../models/User');
 const Thought = require('../models/Thought');
 
-const userThoughts = async (userId) => {
-  try {
-    await Thought.aggregate([
-      { $match: { _id: new ObjectId(userId) } },
-      {
-        $unwind: '$thoughts',
-      },
-    ]);
-  } catch (err) {
-    console.log(err);
-  }
-};
+// const userThoughts = async (userId) => {
+//   try {
+//     await Thought.aggregate([
+//       { $match: { _id: new ObjectId(userId) } },
+//       {
+//         $unwind: '$thoughts',
+//       },
+//     ]);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 module.exports = {
   //Get all users
@@ -58,7 +58,7 @@ module.exports = {
       const updatedUser = await User.findByIdAndUpdate(user, update).select(
         '-__v'
       );
-      //! Check update docs in Mongoose to see how to include req.body
+
       !updatedUser
         ? res.json({
             message: `No User found with the id ${req.params.userId}`,
@@ -80,9 +80,3 @@ module.exports = {
 };
 
 // **BONUS**: Remove a user's associated thoughts when deleted.
-
-// getSingleUser,
-// getUsers,
-// createUser,
-// updateSingleUser,
-// deleteSingleUser,
