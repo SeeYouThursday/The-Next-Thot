@@ -42,19 +42,26 @@ const addFriend = async (req, res) => {
 
 const deleteFriend = async (req, res) => {
   try {
-    const user = await User.findOneandUpdate(
+    const user = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friendId: req.params.friendId } },
+      { $pull: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    );
+    const exFriend = await User.findOneAndUpdate(
+      { _id: req.params.friendId },
+      { $pull: { friends: req.params.userId } },
       { runValidators: true, new: true }
     );
 
-    if (!user) {
-      return res.status(404).json({ message: `No user found with that ID` });
+    if (!user || !exFriend) {
+      return res
+        .status(404)
+        .json({ message: `No user found with that ID  ${err.message}` });
     }
 
     res.json(user);
   } catch (err) {
-    res.json({ message: `Could not find user/friend` });
+    res.json({ message: `Could not find user: ${err.message}` });
   }
 };
 
