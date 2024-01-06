@@ -51,15 +51,14 @@ module.exports = {
       res.status(500).json({ message: err });
     }
   },
-  //Delete One Thought //! Need to adjust
-  async deletethought(req, res) {
-    await Thought.findByIdAndDelete(req.params.thoughtId),
-      function (err, docs) {
-        if (err) {
-          res.json(err);
-        } else {
-          res.json({ message: `Deleted Thought ${docs}` });
-        }
-      };
+  //Delete One Thought //
+  async deleteThought(req, res) {
+    try {
+      const thoughtId = req.body;
+      const thought = await Thought.findByIdAndDelete(thoughtId);
+      res.json(`${thought} deleted!`);
+    } catch (err) {
+      res.json({ message: `Could not find thought: ${err.message}` });
+    }
   },
 };

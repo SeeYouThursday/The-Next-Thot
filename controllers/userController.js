@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Thought = require('../models/Thought');
+// const Thought = require('../models/Thought');
 
 // const userThoughts = async (userId) => {
 //   try {
@@ -72,6 +72,7 @@ module.exports = {
   async deleteUser(req, res) {
     try {
       const user = await User.findByIdAndDelete(req.params.userId);
+      //// Add remove associated thoughts by user here for BONUS
       res.json(user);
     } catch (err) {
       res.status(500).json({ message: err });

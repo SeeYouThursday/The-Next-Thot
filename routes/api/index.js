@@ -5,4 +5,8 @@ const thoughtRoutes = require('./thoughtRoutes');
 router.use('/users', userRoutes);
 router.use('/thoughts', thoughtRoutes);
 
+router.use((req, res) => {
+    return res.send('Wrong second route!');
+  });
+  
 module.exports = router;
