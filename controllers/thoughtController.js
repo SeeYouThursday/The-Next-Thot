@@ -56,7 +56,9 @@ module.exports = {
     try {
       const thoughtId = req.body;
       const thought = await Thought.findByIdAndDelete(thoughtId);
-      res.json(`${thought} deleted!`);
+      !thought
+        ? res.status(404).json({ message: `Could not find thought` })
+        : res.json(`Thought deleted!`);
     } catch (err) {
       res.json({ message: `Could not find thought: ${err.message}` });
     }

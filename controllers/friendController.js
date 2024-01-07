@@ -6,8 +6,9 @@ const addFriend = async (req, res) => {
     const user = { _id: req.params.userId };
     const friend = req.params.friendId;
     const addedFriend = { $addToSet: { friends: friend } };
-
+    // find first user
     const userCheck = await User.findById(user._id);
+    //find second user
     const friendCheck = await User.findById(friend);
 
     if (!userCheck || !friendCheck) {
@@ -19,6 +20,7 @@ const addFriend = async (req, res) => {
       new: true,
     });
 
+    //update friends array for both
     const addMeBackFriend = await User.findOneAndUpdate(
       { _id: friend },
       {
@@ -29,10 +31,6 @@ const addFriend = async (req, res) => {
         new: true,
       }
     );
-    // userIdCheck(user);
-    // userIdCheck(friend);
-    //find second user
-    //update friends array for both
 
     res.json({ addFriendHere, addMeBackFriend });
   } catch (err) {
