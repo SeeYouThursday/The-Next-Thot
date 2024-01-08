@@ -41,8 +41,9 @@ module.exports = {
       //Handling No Reaction with the ID Found
       if (!reaction) {
         return res.status(404).json({ message: `Reaction not found!` });
+      } else {
+        return res.json(`Reaction deleted!`);
       }
-      return res.json(`Reaction deleted!`);
     } catch (err) {
       //err.message provides a more detailed message about the error.
       res.json({ message: `Could not find thought: ${err.message}` });
