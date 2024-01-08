@@ -57,7 +57,9 @@ const deleteFriend = async (req, res) => {
         .json({ message: `No user found with that ID  ${err.message}` });
     }
 
-    res.json(user);
+    res.json({
+      message: `You are no longer friends with user: ${req.params.friendId}`,
+    });
   } catch (err) {
     res.json({ message: `Could not find user: ${err.message}` });
   }

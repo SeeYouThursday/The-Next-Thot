@@ -62,10 +62,10 @@ module.exports = {
       const username = await User.findById(userId);
       console.log(username);
       // Remove a user's associated thoughts when deleted.
-      const userThoughts = await Thought.deleteMany({
+      await Thought.deleteMany({
         username: username.username,
       });
-      const user = await User.findByIdAndDelete(userId);
+      await User.findByIdAndDelete(userId);
 
       res.json({ message: `User and their Thoughts deleted!` });
     } catch (err) {

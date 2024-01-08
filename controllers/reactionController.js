@@ -15,7 +15,13 @@ module.exports = {
         { runValidators: true, new: true }
       ).select('-__v');
 
-      res.status(200).json(reaction);
+      if (!reaction) {
+        res.status(404).json({ message: `Thought not found!` });
+      } else {
+        const updatedThought = await Thought.findById(thoughtId);
+        console.log(updatedThought);
+        res.status(200).json(updatedThought);
+      }
     } catch (err) {
       res.json({ message: `Could not find user: ${err.message}` });
     }
