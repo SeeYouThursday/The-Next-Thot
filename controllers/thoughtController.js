@@ -2,21 +2,21 @@ const Thought = require('../models/Thought');
 const User = require('../models/User');
 
 module.exports = {
-  //Get all thoughts
+  //Get all thoughts (tested in Insomnia)
   async getThoughts(req, res) {
     try {
-      const thought = await Thought.find({});
+      const thought = await Thought.find({}).select('-__v');
       res.status(200).json(thought);
     } catch (err) {
       console.error({ message: err });
       return res.status(500).json(err);
     }
   },
-  //Get One Thought by Id
+  //Get One Thought by Id (tested in Insomnia)
   async getSingleThought(req, res) {
     try {
       const id = { _id: req.params.thoughtId };
-      const thought = await Thought.findOne(id);
+      const thought = await Thought.findOne(id).select('-__v');
 
       !thought
         ? res.status(404).json({ message: 'No thought found with that ID' })
@@ -26,7 +26,7 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
-  //Create a New Thought
+  //Create a New Thought (tested in Insomnia)
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
@@ -42,13 +42,16 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  //Update One Thought
+  //Update One Thought (tested in Insomnia)
   async updatethought(req, res) {
     try {
       const thought = req.params.thoughtId;
       const update = req.body;
       //Find the thought and update with info in the req.body
-      const updatedThought = await Thought.findByIdAndUpdate(thought, update);
+      const updatedThought = await Thought.findByIdAndUpdate(
+        thought,
+        update
+      ).select('-__v');
 
       !updatedThought
         ? res.json({
@@ -59,7 +62,7 @@ module.exports = {
       res.status(500).json({ message: err });
     }
   },
-  //Delete One Thought //
+  //Delete One Thought (tested in Insomnia)
   async deleteThought(req, res) {
     try {
       const thoughtId = req.body;
