@@ -39,10 +39,10 @@ module.exports = {
         { runValidators: true, new: true }
       );
       //Handling No Reaction with the ID Found
-      if (!reaction) {
+      if (reaction.reactions.length === 0 || !reaction) {
         return res.status(404).json({ message: `Reaction not found!` });
       } else {
-        return res.json(`Reaction deleted!`);
+        return res.json(`Reaction deleted! ${reaction}`);
       }
     } catch (err) {
       //err.message provides a more detailed message about the error.
